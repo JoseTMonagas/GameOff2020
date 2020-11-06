@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends "res://Entities/CelestialBody/Planet/Planet.gd"
 
 var is_mouse_hovering: bool = false
 var drag_start_position: Vector2
