@@ -1,7 +1,12 @@
 extends StateMachine
 
 func _ready():
-	pass
+	for children in get_children():
+		children.set_owner(get_parent())
+	
+	states_map = {
+		"gas": $Gas
+	}
 
 
 func _change_state(state_name: String) -> void:
