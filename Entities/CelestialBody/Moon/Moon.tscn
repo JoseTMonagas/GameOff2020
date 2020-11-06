@@ -1,11 +1,11 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Entities/Moon/Moon.gd" type="Script" id=1]
+[ext_resource path="res://Entities/CelestialBody/Moon/Moon.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://Entities/Moon/StateMachine/SlingshotStateMachine.gd" type="Script" id=3]
-[ext_resource path="res://Entities/Moon/StateMachine/States/Aim.gd" type="Script" id=4]
-[ext_resource path="res://Entities/Moon/StateMachine/States/Static.gd" type="Script" id=5]
-[ext_resource path="res://Entities/Moon/StateMachine/States/Fling.gd" type="Script" id=6]
+[ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/SlingshotStateMachine.gd" type="Script" id=3]
+[ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/States/Aim.gd" type="Script" id=4]
+[ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/States/Static.gd" type="Script" id=5]
+[ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/States/Fling.gd" type="Script" id=6]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
