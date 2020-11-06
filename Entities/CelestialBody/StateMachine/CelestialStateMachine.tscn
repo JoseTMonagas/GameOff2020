@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Entities/CelestialBody/StateMachine/CelestialStateMachine.gd" type="Script" id=1]
+
+[node name="CelestialStateMachine" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Gas" type="Node" parent="."]
+
+[node name="Ice" type="Node" parent="."]
+
+[node name="Iron" type="Node" parent="."]
+
+[node name="Lava" type="Node" parent="."]
+
+[node name="Ocean" type="Node" parent="."]
+
+[node name="Terra" type="Node" parent="."]
