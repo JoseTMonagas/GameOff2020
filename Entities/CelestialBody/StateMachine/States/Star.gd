@@ -2,8 +2,8 @@ extends State
 
 
 func enter() -> void:
-	# TODO: Change sprite to gas sprite
-	# TODO: Start gas animations
+	# TODO: Change sprite
+	# TODO: Start animations
 	pass
 
 
@@ -15,22 +15,21 @@ func update(delta: float) -> void:
 				owner._increase_mass(mass_operator)
 			"Ice":
 				owner._decrease_mass(mass_operator)
-				# TODO: Add Ice rings
+				emit_signal("finished", "water")
 			"Iron":
-				owner._decrease_mass(mass_operator)
-				# TODO: Add Iron rings
+				owner._increase_mass(mass_operator)
 			"Lava":
-				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "star")
+				owner._increase_mass(mass_operator)
 			"Ocean":
 				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "iron")
+				emit_signal("finished", "terra")
 			"Terra":
-				owner._decrease_mass(mass_operator)
-				# TODO: Add Terra rings
+				owner._increase_mass(mass_operator)
 			"Star":
-				emit_signal("finished", "star")
+				owner._increase_mass(mass_operator)
 			"Comet":
-				emit_signal("finished", "gas")
+				owner._increase_mass(mass_operator)
+			"Earth":
+				owner._increase_mass(mass_operator)
 			_:
 				owner._decrease_mass(mass_operator)
