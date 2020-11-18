@@ -1,10 +1,10 @@
 extends State
 
+export(Array, int) var frames
+
 
 func enter() -> void:
-	# TODO: Change sprite
-	# TODO: Start animations
-	pass
+	owner._change_sprite(frames[randi() % frames.size()])
 
 
 func exit() -> void:
@@ -12,36 +12,29 @@ func exit() -> void:
 	pass
 
 
-func update(delta: float) -> void:
-	if owner.has_collided:
-		var mass_operator = owner.get_mass() * 0.25
-		match(owner.collider_state):
-			"Gas":
-				owner._decrease_mass(mass_operator)
-				# TODO Add Terra Ring
-				emit_signal("finished", "gas")
-			"Ice":
-				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "ocean")
-			"Iron":
-				owner._increase_mass(mass_operator)
-				emit_signal("finished", "lava")
-			"Lava":
-				owner._increase_mass(mass_operator)
-				emit_signal("finished", "lava")
-			"Ocean":
-				owner._increase_mass(mass_operator)
-				emit_signal("finished", "earth")
-			"Terra":
-				owner._increase_mass(mass_operator)
-			"Star":
-				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "lava")
-			"Comet":
-				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "ocean")
-			"Earth":
-				owner._increase_mass(mass_operator)
-				emit_signal("finished", "lava")
-			_:
-				owner._decrease_mass(mass_operator)
+
+func collision_resolve(collider_state: String) -> void:
+	match(collider_state):
+		"Gas":
+			# TODO Add Terra Ring
+			emit_signal("finished", "gas")
+		"Ice":
+			emit_signal("finished", "ocean")
+		"Iron":
+			emit_signal("finished", "lava")
+		"Lava":
+			emit_signal("finished", "lava")
+		"Ocean":
+			emit_signal("finished", "earth")
+		"Terra":
+			pass
+		"Star":
+			emit_signal("finished", "lava")
+		"Comet":
+			emit_signal("finished", "ocean")
+		"Earth":
+			emit_signal("finished", "lava")
+		_:
+			pass
+
+

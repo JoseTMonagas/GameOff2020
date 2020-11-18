@@ -1,35 +1,31 @@
 extends State
 
+export(Array, int) var frames
+
 
 func enter() -> void:
-	# TODO: Change sprite
-	# TODO: Start animations
-	pass
+	owner._change_sprite(frames[randi() % frames.size()])
 
 
-func update(delta: float) -> void:
-	if owner.has_collided:
-		var mass_operator = owner.get_mass() * 0.25
-		match(owner.collider_state):
-			"Gas":
-				owner._increase_mass(mass_operator)
-			"Ice":
-				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "water")
-			"Iron":
-				owner._increase_mass(mass_operator)
-			"Lava":
-				owner._increase_mass(mass_operator)
-			"Ocean":
-				owner._decrease_mass(mass_operator)
-				emit_signal("finished", "terra")
-			"Terra":
-				owner._increase_mass(mass_operator)
-			"Star":
-				owner._increase_mass(mass_operator)
-			"Comet":
-				owner._increase_mass(mass_operator)
-			"Earth":
-				owner._increase_mass(mass_operator)
-			_:
-				owner._decrease_mass(mass_operator)
+func collision_resolve(collider_state: String) -> void:
+	match(collider_state):
+		"Gas":
+			pass
+		"Ice":
+			emit_signal("finished", "ocean")
+		"Iron":
+			pass
+		"Lava":
+			pass
+		"Ocean":
+			emit_signal("finished", "terra")
+		"Terra":
+			pass
+		"Star":
+			pass
+		"Comet":
+			pass
+		"Earth":
+			pass
+		_:
+			pass
