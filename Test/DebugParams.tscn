@@ -1,0 +1,171 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+func _on_StopSpeed_text_changed():
+	ProjectSettings.set(\"physics/2d/stop_speed\", int($VBoxContainer/HBoxContainer/StopSpeed.text)) 
+
+
+func _on_Acceleration_text_changed():
+	ProjectSettings.set(\"physics/2d/default_acceleration\", int($VBoxContainer/HBoxContainer5/Acceleration.text))
+
+
+func _on_PlanetGen_text_changed():
+	ProjectSettings.set(\"physics/2d/gen_distance\", int($VBoxContainer/HBoxContainer2/PlanetGen.text))
+
+
+func _on_PlanetLifetime_text_changed():
+	ProjectSettings.set(\"physics/2d/planet_lifetime\", int($VBoxContainer/HBoxContainer3/PlanetLifetime.text))
+
+
+func _on_PlanetRadius_text_changed():
+	ProjectSettings.set(\"physics/2d/poisson_radius\", int($VBoxContainer/HBoxContainer4/PlanetRadius.text))
+
+
+
+func _on_DebugParams_visibility_changed():
+	$VBoxContainer/HBoxContainer/StopSpeed.text = str(ProjectSettings.get(\"physics/2d/stop_speed\"))
+	$VBoxContainer/HBoxContainer2/PlanetGen.text = str(ProjectSettings.get(\"physics/2d/gen_distance\"))
+	$VBoxContainer/HBoxContainer3/PlanetLifetime.text = str(ProjectSettings.get(\"physics/2d/planet_lifetime\"))
+	$VBoxContainer/HBoxContainer4/PlanetRadius.text = str(ProjectSettings.get(\"physics/2d/poisson_radius\"))
+	$VBoxContainer/HBoxContainer5/Acceleration.text = str(ProjectSettings.get(\"physics/2d/default_acceleration\"))
+"
+
+[node name="DebugParams" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = 512.0
+margin_bottom = 300.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="VBoxContainer"]
+margin_right = 1024.0
+margin_bottom = 14.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer5"]
+margin_right = 250.0
+margin_bottom = 14.0
+text = "Acceleration ( Base speed for yeeting) :"
+
+[node name="Acceleration" type="TextEdit" parent="VBoxContainer/HBoxContainer5"]
+margin_left = 254.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 18.0
+margin_right = 1024.0
+margin_bottom = 32.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 36.0
+margin_right = 1024.0
+margin_bottom = 50.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+margin_right = 435.0
+margin_bottom = 14.0
+text = "Stop Speed (Once it reaches this velocity it swtiches to Static State):"
+
+[node name="StopSpeed" type="TextEdit" parent="VBoxContainer/HBoxContainer"]
+margin_left = 439.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+margin_top = 54.0
+margin_right = 1024.0
+margin_bottom = 68.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 72.0
+margin_right = 1024.0
+margin_bottom = 86.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+margin_right = 557.0
+margin_bottom = 14.0
+text = "Planet Gen Distance ( If the moon moves this distance new planets will be generated) :"
+
+[node name="PlanetGen" type="TextEdit" parent="VBoxContainer/HBoxContainer2"]
+margin_left = 561.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+margin_top = 90.0
+margin_right = 1024.0
+margin_bottom = 104.0
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 108.0
+margin_right = 1024.0
+margin_bottom = 122.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer3"]
+margin_right = 321.0
+margin_bottom = 14.0
+text = "Planet lifetime (How long planets exists, in msec):"
+
+[node name="PlanetLifetime" type="TextEdit" parent="VBoxContainer/HBoxContainer3"]
+margin_left = 325.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label4" type="Label" parent="VBoxContainer"]
+margin_top = 126.0
+margin_right = 1024.0
+margin_bottom = 140.0
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 144.0
+margin_right = 1024.0
+margin_bottom = 158.0
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer4"]
+margin_right = 374.0
+margin_bottom = 14.0
+text = "Planet Radius (Distance between planets when generated):"
+
+[node name="PlanetRadius" type="TextEdit" parent="VBoxContainer/HBoxContainer4"]
+margin_left = 378.0
+margin_right = 1024.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+
+[node name="Label5" type="Label" parent="VBoxContainer"]
+margin_top = 162.0
+margin_right = 1024.0
+margin_bottom = 176.0
+
+[node name="Label6" type="Label" parent="VBoxContainer"]
+margin_top = 180.0
+margin_right = 1024.0
+margin_bottom = 194.0
+text = "Press Enter to toggle this window"
+[connection signal="visibility_changed" from="." to="." method="_on_DebugParams_visibility_changed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer5/Acceleration" to="." method="_on_Acceleration_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer/StopSpeed" to="." method="_on_StopSpeed_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer2/PlanetGen" to="." method="_on_PlanetGen_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer3/PlanetLifetime" to="." method="_on_PlanetLifetime_text_changed"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer4/PlanetRadius" to="." method="_on_PlanetRadius_text_changed"]

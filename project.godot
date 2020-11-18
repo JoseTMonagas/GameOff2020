@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Reference",
+"class": "PoissonDiscSampling",
+"language": "GDScript",
+"path": "res://addons/PoissonDiscSampling/PoissonDiscSampling.gd"
+}, {
 "base": "Node",
 "class": "State",
 "language": "GDScript",
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://Entities/StateMachine/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"PoissonDiscSampling": "",
 "State": "",
 "StateMachine": ""
 }
@@ -29,14 +35,22 @@ _global_script_class_icons={
 config/name="GameOff0"
 config/icon="res://icon.png"
 
+[autoload]
+
+Debug="*res://Test/Debug.gd"
+
 [physics]
 
 2d/default_gravity=0
 2d/default_gravity_vector=Vector2( 0, 0 )
+2d/default_acceleration=120.0
+2d/stop_speed=1000.0
+2d/gen_distance=520.0
+2d/planet_lifetime=20000.0
+2d/poisson_radius=400
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_environment="res://default_env.tres"

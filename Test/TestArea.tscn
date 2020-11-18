@@ -1,0 +1,129 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entities/CelestialBody/Moon/Moon.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Test/DebugParams.tscn" type="PackedScene" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+var Planet: PackedScene = preload(\"res://Entities/CelestialBody/Planet/Planet.tscn\")
+
+var last_gen_pos: Vector2 = Vector2.ZERO
+
+var planet_gen_dis: int = ProjectSettings.get(\"physics/2d/gen_distance\")
+var radius: int = ProjectSettings.get(\"physics/2d/poisson_radius\")
+onready var moon: RigidBody2D = $Moon
+
+func _ready():
+	_planet_gen()
+
+
+func _input(event: InputEvent):
+	if event is InputEventKey:
+		if event.is_action_pressed(\"ui_cancel\"):
+			get_tree().reload_current_scene()
+		if event.is_action_pressed(\"ui_accept\"):
+			var popup = $CanvasLayer/WindowDialog
+			popup.visible = !popup.visible
+			
+
+func _physics_process(delta: float) -> void:
+	if moon != null:
+		if moon.global_position.distance_to(last_gen_pos) > planet_gen_dis:
+			_planet_gen()
+	
+
+	$CanvasLayer/Control/VBoxContainer/CurrentMass.text = \"Current Mass: \" + str(Debug.mass)
+	$CanvasLayer/Control/VBoxContainer/CurrentSpeed.text = \"Current Speed: \" + str(Debug.speed)
+	
+
+
+func _planet_gen() -> void:
+	var points: Array = _poisson_sampling()
+	if points.size() > 0:
+		for point in points:
+			_planet_creation(point)
+
+
+func _planet_creation(pos: Vector2) -> void:
+	var new_planet = Planet.instance()
+	new_planet.position = pos
+	add_child(new_planet)
+
+
+func _poisson_sampling() -> Array:
+	var pds = PoissonDiscSampling.new()
+	
+	var start_time: float = OS.get_ticks_msec()
+	var player_pos: Vector2 = $Moon.global_position
+	var origin: Vector3 = Vector3(player_pos.x, player_pos.y, 520)
+	var points = pds.generate_points(radius, origin, 30)
+	
+	last_gen_pos = player_pos
+	
+	return points
+"
+
+[node name="TestArea" type="Node2D"]
+script = SubResource( 1 )
+
+[node name="Moon" parent="." instance=ExtResource( 1 )]
+mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Esc" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_right = 187.0
+margin_bottom = 14.0
+text = "Press ESC to Restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Setting" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 18.0
+margin_right = 187.0
+margin_bottom = 32.0
+text = "Press Enter to toggle settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Padding" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 36.0
+margin_right = 187.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CurrentSpeed" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 54.0
+margin_right = 187.0
+margin_bottom = 68.0
+
+[node name="CurrentMass" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+margin_top = 72.0
+margin_right = 187.0
+margin_bottom = 86.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WindowDialog" type="WindowDialog" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DebugParams" parent="CanvasLayer/WindowDialog" instance=ExtResource( 2 )]
