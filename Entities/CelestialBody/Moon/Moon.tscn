@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Entities/CelestialBody/Moon/Moon.gd" type="Script" id=1]
 [ext_resource path="res://Entities/CelestialBody/Planet/Planet.tscn" type="PackedScene" id=2]
@@ -6,10 +6,17 @@
 [ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/States/Aim.gd" type="Script" id=4]
 [ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/States/Static.gd" type="Script" id=5]
 [ext_resource path="res://Entities/CelestialBody/Moon/StateMachine/States/Fling.gd" type="Script" id=6]
+[ext_resource path="res://Entities/Debug/StateNameDisplayer.tscn" type="PackedScene" id=7]
 
 [node name="Moon" instance=ExtResource( 2 )]
+z_index = 1
 input_pickable = true
 script = ExtResource( 1 )
+IS_MOON = true
+_mass = 50.0
+
+[node name="CelestialStateMachine" parent="." index="2"]
+is_random = false
 
 [node name="SlingshotStateMachine" type="Node" parent="." index="3"]
 script = ExtResource( 3 )
@@ -26,5 +33,14 @@ script = ExtResource( 5 )
 
 [node name="Camera2D" type="Camera2D" parent="." index="4"]
 current = true
+
+[node name="SlingshotState" parent="." index="5" instance=ExtResource( 7 )]
+margin_top = -80.0
+margin_bottom = -66.0
+
+[node name="CelestialState" parent="." index="6"]
+margin_left = 0.0
+margin_right = 40.0
 [connection signal="mouse_entered" from="." to="." method="_on_Moon_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_Moon_mouse_exited"]
+[connection signal="state_changed" from="SlingshotStateMachine" to="SlingshotState" method="_on_state_changed"]

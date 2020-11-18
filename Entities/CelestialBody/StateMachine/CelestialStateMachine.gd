@@ -1,12 +1,35 @@
 extends StateMachine
 
+signal change_sprite(frame)
+
+export var is_random: bool = true
+
+var collider_state: String
+
 func _ready():
-	for children in get_children():
-		children.set_owner(get_parent())
-	
 	states_map = {
-		"gas": $Gas
+		"gas": $Gas,
+		"ice": $Ice,
+		"iron": $Iron,
+		"lava": $Lava,
+		"ocean": $Ocean,
+		"terra": $Terra,
+		"star": $Star,
+		"comet": $Comet,
+		"earth": $Earth
 	}
+	
+	if is_random:
+		var states: Array = states_map.keys()
+		_change_state(states[randi() % states.size()])
+
+
+func state_collision(collider_state: String) -> void:
+	states_stack[0].collision_resolve(collider_state)
+
+
+func _change_sprite(frame: int) -> void:
+	emit_signal("change_sprite", frame)
 
 
 func _change_state(state_name: String) -> void:

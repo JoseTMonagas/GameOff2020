@@ -13,31 +13,40 @@
 
 [node name="CelestialStateMachine" type="Node"]
 script = ExtResource( 1 )
-START_STATE = NodePath("Gas")
+START_STATE = NodePath("Terra")
 
 [node name="Gas" type="Node" parent="."]
 script = ExtResource( 2 )
+frames = [ 16, 17, 18, 19 ]
 
 [node name="Ice" type="Node" parent="."]
 script = ExtResource( 3 )
+frames = [ 8, 9, 10, 11 ]
 
 [node name="Iron" type="Node" parent="."]
 script = ExtResource( 4 )
+frames = [ 24, 25, 26 ]
 
 [node name="Lava" type="Node" parent="."]
 script = ExtResource( 5 )
+frames = [ 20, 21, 22, 23 ]
 
 [node name="Ocean" type="Node" parent="."]
 script = ExtResource( 6 )
+frames = [ 4, 5, 6, 7 ]
 
 [node name="Terra" type="Node" parent="."]
 script = ExtResource( 7 )
+frames = [ 12, 13, 14, 15 ]
 
 [node name="Star" type="Node" parent="."]
 script = ExtResource( 8 )
+frames = [ 27 ]
 
 [node name="Comet" type="Node" parent="."]
 script = ExtResource( 9 )
+frames = [ 8, 9, 10, 11 ]
 
 [node name="Earth" type="Node" parent="."]
 script = ExtResource( 10 )
+frames = [ 0, 1, 2, 3 ]
